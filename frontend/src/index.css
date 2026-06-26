@@ -27,6 +27,8 @@ html, body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 14px;
   height: 100%;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
 }
 
 #root {
@@ -41,4 +43,11 @@ button {
 
 input {
   font: inherit;
+}
+
+/* Prevent iOS input zoom — inputs already set font-size:16px in JS */
+@media (max-width: 639px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
