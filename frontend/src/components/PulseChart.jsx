@@ -91,9 +91,12 @@ ctx.font = `${pad.left > 50 ? 9 : 8}px monospace`
 ctx.textAlign = 'center'
 const labelIndices = new Set()
 for (let i = 0; i < bars.length; i += step) labelIndices.add(i)
-labelIndices.add(bars.length - 1) // always include last
+labelIndices.add(bars.length - 1)
 for (const i of labelIndices) {
-  const x = pad.left + i * barW + barW / 2
+  const x = Math.min(
+    pad.left + i * barW + barW / 2,
+    width - pad.right - 10
+  )
   ctx.fillText(bars[i].date.slice(5), x, height - 3)
 }
 }
