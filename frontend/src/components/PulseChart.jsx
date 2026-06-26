@@ -96,6 +96,11 @@ for (const i of labelIndices) {
   const x = pad.left + i * barW + barW / 2
   ctx.fillText(bars[i].date.slice(5), x, height - 3)
 }
+  // Always draw the last date
+const lastX = pad.left + (bars.length - 1) * barW + barW / 2
+ctx.textAlign = 'right'
+ctx.fillText(bars[bars.length - 1].date.slice(5), Math.min(lastX, width - pad.right - 2), height - 3)
+ctx.textAlign = 'center'
 }
 
 function drawOscillator(ctx, bars, width, height, pad) {
