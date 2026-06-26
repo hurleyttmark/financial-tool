@@ -86,13 +86,16 @@ function drawCandlesticks(ctx, bars, width, height, pad) {
   })
 
   const step = Math.max(1, Math.floor(bars.length / 6))
-  ctx.fillStyle = '#8b949e'
-  ctx.font = `${pad.left > 50 ? 9 : 8}px monospace`
-  ctx.textAlign = 'center'
-  for (let i = 0; i < bars.length; i += step) {
-    const x = pad.left + i * barW + barW / 2
-    ctx.fillText(bars[i].date.slice(5), x, height - 3)
-  }
+ctx.fillStyle = '#8b949e'
+ctx.font = `${pad.left > 50 ? 9 : 8}px monospace`
+ctx.textAlign = 'center'
+const labelIndices = new Set()
+for (let i = 0; i < bars.length; i += step) labelIndices.add(i)
+labelIndices.add(bars.length - 1) // always include last
+for (const i of labelIndices) {
+  const x = pad.left + i * barW + barW / 2
+  ctx.fillText(bars[i].date.slice(5), x, height - 3)
+}
 }
 
 function drawOscillator(ctx, bars, width, height, pad) {
