@@ -1,0 +1,110 @@
+2026-06-25T18:53:02 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T18:53:02 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T18:54:09 | INFO | SHUTDOWN
+2026-06-25T18:54:47 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T18:54:47 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T18:55:54 | INFO | SHUTDOWN
+2026-06-25T18:56:04 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T18:56:04 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T19:00:01 | INFO | SHUTDOWN
+2026-06-25T19:01:02 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:01:02 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T19:02:08 | INFO | SHUTDOWN
+2026-06-25T19:02:18 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:02:18 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T19:03:26 | INFO | WS OPEN | symbol=AAPL
+2026-06-25T19:03:27 | INFO | AV FETCH | symbol=AAPL | status=200 | ms=1091
+2026-06-25T19:03:27 | WARNING | AV PARSE ERROR | symbol=AAPL | error=Alpha Vantage info: Thank you for using Alpha Vantage! This is a premium endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium endpoints
+2026-06-25T19:04:25 | INFO | SHUTDOWN
+2026-06-25T19:04:29 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:04:29 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T19:04:35 | INFO | SHUTDOWN
+2026-06-25T19:04:37 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:04:37 | INFO | STARTUP | data_source=alphavantage | db=./cache.db
+2026-06-25T19:04:42 | INFO | WS OPEN | symbol=AAPL
+2026-06-25T19:04:43 | INFO | AV FETCH | symbol=AAPL | status=200 | ms=835
+2026-06-25T19:04:43 | WARNING | AV PARSE ERROR | symbol=AAPL | error=Alpha Vantage info: Thank you for using Alpha Vantage! The outputsize=full parameter value is a premium feature for the TIME_SERIES_DAILY endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium features
+2026-06-25T19:04:57 | INFO | WS OPEN | symbol=NVDA
+2026-06-25T19:04:57 | INFO | AV FETCH | symbol=NVDA | status=200 | ms=635
+2026-06-25T19:04:57 | WARNING | AV PARSE ERROR | symbol=NVDA | error=Alpha Vantage info: Thank you for using Alpha Vantage! The outputsize=full parameter value is a premium feature for the TIME_SERIES_DAILY endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium features
+2026-06-25T19:05:29 | INFO | WS OPEN | symbol=AAPL
+2026-06-25T19:05:30 | INFO | AV FETCH | symbol=AAPL | status=200 | ms=570
+2026-06-25T19:05:30 | WARNING | AV PARSE ERROR | symbol=AAPL | error=Alpha Vantage info: Thank you for using Alpha Vantage! The outputsize=full parameter value is a premium feature for the TIME_SERIES_DAILY endpoint. You may subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly unlock all premium features
+2026-06-25T19:07:14 | INFO | SHUTDOWN
+2026-06-25T19:07:21 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:07:21 | INFO | STARTUP | data_source=yfinance | db=./cache.db
+2026-06-25T19:07:38 | INFO | WS OPEN | symbol=AAPL
+2026-06-25T19:07:45 | INFO | YF FETCH | symbol=AAPL | rows=501 | ms=5603
+2026-06-25T19:07:46 | INFO | CACHE WRITE | symbol=AAPL | bars=300
+2026-06-25T19:07:46 | INFO | WS COMPLETE | symbol=AAPL | bars=300
+2026-06-25T19:08:35 | INFO | WS OPEN | symbol=CLOV
+2026-06-25T19:08:35 | INFO | YF FETCH | symbol=CLOV | rows=501 | ms=173
+2026-06-25T19:08:35 | INFO | CACHE WRITE | symbol=CLOV | bars=300
+2026-06-25T19:08:35 | INFO | WS COMPLETE | symbol=CLOV | bars=300
+2026-06-25T19:09:50 | INFO | WS OPEN | symbol=NVDA
+2026-06-25T19:09:50 | INFO | YF FETCH | symbol=NVDA | rows=501 | ms=200
+2026-06-25T19:09:50 | INFO | CACHE WRITE | symbol=NVDA | bars=300
+2026-06-25T19:09:50 | INFO | WS COMPLETE | symbol=NVDA | bars=300
+2026-06-25T19:10:19 | INFO | WS OPEN | symbol=HIMS
+2026-06-25T19:10:19 | INFO | YF FETCH | symbol=HIMS | rows=501 | ms=231
+2026-06-25T19:10:20 | INFO | CACHE WRITE | symbol=HIMS | bars=300
+2026-06-25T19:10:20 | INFO | WS COMPLETE | symbol=HIMS | bars=300
+2026-06-25T19:14:16 | INFO | WS OPEN | symbol=OPEN
+2026-06-25T19:14:17 | INFO | YF FETCH | symbol=OPEN | rows=501 | ms=343
+2026-06-25T19:14:17 | INFO | CACHE WRITE | symbol=OPEN | bars=300
+2026-06-25T19:14:17 | INFO | WS COMPLETE | symbol=OPEN | bars=300
+2026-06-25T19:20:16 | INFO | SHUTDOWN
+2026-06-25T19:20:21 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:20:21 | INFO | STARTUP | data_source=yfinance | db=./cache.db
+2026-06-25T19:20:40 | INFO | SHUTDOWN
+2026-06-25T19:20:43 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T19:20:43 | INFO | STARTUP | data_source=yfinance | db=./cache.db
+2026-06-25T19:20:52 | INFO | WS OPEN | symbol=OPEN
+2026-06-25T19:20:52 | INFO | CACHE HIT | symbol=OPEN | bars=300
+2026-06-25T19:20:52 | INFO | WS COMPLETE | symbol=OPEN | bars=300
+2026-06-25T19:21:20 | INFO | WS OPEN | symbol=CLOV
+2026-06-25T19:21:20 | INFO | CACHE HIT | symbol=CLOV | bars=300
+2026-06-25T19:21:20 | INFO | WS COMPLETE | symbol=CLOV | bars=300
+2026-06-25T19:21:39 | INFO | WS OPEN | symbol=HIMS
+2026-06-25T19:21:39 | INFO | CACHE HIT | symbol=HIMS | bars=300
+2026-06-25T19:21:39 | INFO | WS COMPLETE | symbol=HIMS | bars=300
+2026-06-25T19:22:28 | INFO | WS OPEN | symbol=SPY
+2026-06-25T19:22:30 | INFO | YF FETCH | symbol=SPY | rows=501 | ms=782
+2026-06-25T19:22:30 | INFO | CACHE WRITE | symbol=SPY | bars=300
+2026-06-25T19:22:30 | INFO | WS COMPLETE | symbol=SPY | bars=300
+2026-06-25T19:23:33 | INFO | WS OPEN | symbol=SOFI
+2026-06-25T19:23:34 | INFO | YF FETCH | symbol=SOFI | rows=501 | ms=287
+2026-06-25T19:23:34 | INFO | CACHE WRITE | symbol=SOFI | bars=300
+2026-06-25T19:23:34 | INFO | WS COMPLETE | symbol=SOFI | bars=300
+2026-06-25T19:24:03 | INFO | WS OPEN | symbol=ENPH
+2026-06-25T19:24:04 | INFO | YF FETCH | symbol=ENPH | rows=501 | ms=180
+2026-06-25T19:24:04 | INFO | CACHE WRITE | symbol=ENPH | bars=300
+2026-06-25T19:24:04 | INFO | WS COMPLETE | symbol=ENPH | bars=300
+2026-06-25T19:27:55 | INFO | WS OPEN | symbol=CVGI
+2026-06-25T19:27:55 | INFO | YF FETCH | symbol=CVGI | rows=501 | ms=167
+2026-06-25T19:27:56 | INFO | CACHE WRITE | symbol=CVGI | bars=300
+2026-06-25T19:27:56 | INFO | WS COMPLETE | symbol=CVGI | bars=300
+2026-06-25T19:35:17 | INFO | WS OPEN | symbol=SYM
+2026-06-25T19:35:17 | INFO | YF FETCH | symbol=SYM | rows=501 | ms=539
+2026-06-25T19:35:17 | INFO | CACHE WRITE | symbol=SYM | bars=300
+2026-06-25T19:35:18 | INFO | WS COMPLETE | symbol=SYM | bars=300
+2026-06-25T19:36:35 | INFO | WS OPEN | symbol=RKLB
+2026-06-25T19:36:35 | INFO | YF FETCH | symbol=RKLB | rows=501 | ms=342
+2026-06-25T19:36:35 | INFO | CACHE WRITE | symbol=RKLB | bars=300
+2026-06-25T19:36:35 | INFO | WS COMPLETE | symbol=RKLB | bars=300
+2026-06-25T19:37:16 | INFO | WS OPEN | symbol=RIVN
+2026-06-25T19:37:16 | INFO | YF FETCH | symbol=RIVN | rows=501 | ms=143
+2026-06-25T19:37:16 | INFO | CACHE WRITE | symbol=RIVN | bars=300
+2026-06-25T19:37:16 | INFO | WS COMPLETE | symbol=RIVN | bars=300
+2026-06-25T19:41:06 | INFO | WS OPEN | symbol=BORR
+2026-06-25T19:41:07 | INFO | YF FETCH | symbol=BORR | rows=501 | ms=532
+2026-06-25T19:41:07 | INFO | CACHE WRITE | symbol=BORR | bars=300
+2026-06-25T19:41:07 | INFO | WS COMPLETE | symbol=BORR | bars=300
+2026-06-25T19:41:20 | INFO | WS OPEN | symbol=ZIM
+2026-06-25T19:41:20 | INFO | YF FETCH | symbol=ZIM | rows=501 | ms=134
+2026-06-25T19:41:20 | INFO | CACHE WRITE | symbol=ZIM | bars=300
+2026-06-25T19:41:20 | INFO | WS COMPLETE | symbol=ZIM | bars=300
+2026-06-25T19:41:50 | INFO | WS OPEN | symbol=ASPN
+2026-06-25T19:41:50 | INFO | YF FETCH | symbol=ASPN | rows=501 | ms=126
+2026-06-25T19:41:50 | INFO | CACHE WRITE | symbol=ASPN | bars=300
+2026-06-25T19:41:50 | INFO | WS COMPLETE | symbol=ASPN | bars=300
