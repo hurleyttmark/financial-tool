@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: financial-tool-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install fastapi "uvicorn[standard]" pydantic pydantic-settings httpx python-dotenv numpy pytest pytest-asyncio aiosqlite yfinance
+    startCommand: python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: ALPHA_VANTAGE_API_KEY
+        sync: false
+      - key: DATA_SOURCE
+        value: yfinance
+      - key: DB_PATH
+        value: /tmp/cache.db
+      - key: LOG_PATH
+        value: /tmp/app.log
