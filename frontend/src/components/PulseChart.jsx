@@ -172,8 +172,8 @@ export default function PulseChart({ bars, isMobile }) {
   const [dims, setDims] = useState({ width: 900 })
 
   useEffect(() => {
-    if (bars.length > 0) setReplayIndex(bars.length - 1)
-  }, [bars.length])
+  if (bars.length > 0) setReplayIndex(bars.length - 1)
+}, [bars.length, bars])
 
   useEffect(() => {
     const el = containerRef.current
