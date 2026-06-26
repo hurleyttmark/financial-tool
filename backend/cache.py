@@ -13,7 +13,7 @@ from config import settings
 from logger import log
 
 
-TTL_SECONDS = 3_600  # 24 hours
+TTL_SECONDS = 86_400  # 24 hours
 
 
 @contextmanager
