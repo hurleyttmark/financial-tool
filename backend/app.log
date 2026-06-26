@@ -109,3 +109,5 @@
 2026-06-25T19:41:50 | INFO | CACHE WRITE | symbol=ASPN | bars=300
 2026-06-25T19:41:50 | INFO | WS COMPLETE | symbol=ASPN | bars=300
 2026-06-25T21:28:58 | INFO | SHUTDOWN
+2026-06-25T21:29:03 | INFO | DB | init_db complete | path=./cache.db
+2026-06-25T21:29:03 | INFO | STARTUP | data_source=yfinance | db=./cache.db
