@@ -4,3 +4,4 @@ backend/__pycache__/
 backend/cache.db
 backend/app.log
 .env
+backend/cache.db

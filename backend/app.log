@@ -123,3 +123,7 @@
 2026-06-25T22:19:50 | INFO | SHUTDOWN
 2026-06-25T22:19:52 | INFO | DB | init_db complete | path=./cache.db
 2026-06-25T22:19:52 | INFO | STARTUP | data_source=yfinance | db=./cache.db
+2026-06-26T18:20:07 | INFO | SHUTDOWN
+2026-06-26T18:20:19 | INFO | DB | init_db complete | path=./cache.db
+2026-06-26T18:20:19 | INFO | STARTUP | data_source=yfinance | db=./cache.db
+2026-06-26T18:20:53 | INFO | SHUTDOWN
