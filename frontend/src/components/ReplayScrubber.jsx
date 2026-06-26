@@ -1,13 +1,14 @@
 /**
- * ReplayScrubber.jsx — Drag scrubber that controls which historical bars are visible.
- * Emits onScrub(index) as user drags, which drives chart re-render.
+ * ReplayScrubber.jsx — Drag scrubber with large hit area + Play/Pause button.
  */
-import { useRef, useCallback, useEffect } from 'react'
+import { useRef, useCallback, useEffect, useState } from 'react'
 import { clamp } from '../utils/colors.js'
 
 export default function ReplayScrubber({ totalBars, currentIndex, onScrub, disabled }) {
   const trackRef = useRef(null)
   const dragging = useRef(false)
+  const playRef = useRef(null)
+  const [playing, setPlaying] = useState(false)
 
   const computeIndex = useCallback((clientX) => {
     const track = trackRef.current
@@ -20,6 +21,7 @@ export default function ReplayScrubber({ totalBars, currentIndex, onScrub, disab
   const handleMouseDown = useCallback((e) => {
     if (disabled) return
     dragging.current = true
+    setPlaying(false)
     onScrub(computeIndex(e.clientX))
     e.preventDefault()
   }, [disabled, computeIndex, onScrub])
@@ -42,42 +44,67 @@ export default function ReplayScrubber({ totalBars, currentIndex, onScrub, disab
     }
   }, [handleMouseMove, handleMouseUp])
 
-  // Touch support
-  const handleTouchStart = useCallback((e) => {
+  // Play animation
+  useEffect(() => {
+    if (!playing) {
+      if (playRef.current) clearInterval(playRef.current)
+      return
+    }
+    // If at end, restart from beginning
+    if (currentIndex >= totalBars - 1) onScrub(0)
+    playRef.current = setInterval(() => {
+      onScrub(prev => {
+        if (prev >= totalBars - 1) {
+          setPlaying(false)
+          clearInterval(playRef.current)
+          return prev
+        }
+        return prev + 1
+      })
+    }, 60)
+    return () => clearInterval(playRef.current)
+  }, [playing, totalBars])
+
+  const togglePlay = useCallback(() => {
     if (disabled) return
-    dragging.current = true
-    onScrub(computeIndex(e.touches[0].clientX))
-  }, [disabled, computeIndex, onScrub])
+    setPlaying(p => !p)
+  }, [disabled])
 
-  const handleTouchMove = useCallback((e) => {
-    if (!dragging.current) return
-    onScrub(computeIndex(e.touches[0].clientX))
-  }, [computeIndex, onScrub])
-
-  const handleTouchEnd = useCallback(() => {
-    dragging.current = false
-  }, [])
-
-  const pct = totalBars > 1 ? (currentIndex / (totalBars - 1)) * 100 : 0
+  const pct = totalBars > 1 ? (currentIndex / (totalBars - 1)) * 100 : 100
 
   return (
     <div style={styles.wrapper}>
       <span style={styles.label}>Replay</span>
-      <div
-        ref={trackRef}
+
+      {/* Play/Pause button */}
+      <button
+        onClick={togglePlay}
+        disabled={disabled}
         style={{
-          ...styles.track,
-          cursor: disabled ? 'not-allowed' : 'pointer',
+          ...styles.playBtn,
           opacity: disabled ? 0.4 : 1,
         }}
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        title={playing ? 'Pause' : 'Play replay'}
       >
-        <div style={{ ...styles.fill, width: `${pct}%` }} />
-        <div style={{ ...styles.thumb, left: `${pct}%` }} />
+        {playing ? '⏸' : '▶'}
+      </button>
+
+      {/* Large hit-area track */}
+      <div style={styles.trackWrapper}>
+        <div
+          ref={trackRef}
+          style={{
+            ...styles.track,
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            opacity: disabled ? 0.4 : 1,
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <div style={{ ...styles.fill, width: `${pct}%` }} />
+          <div style={{ ...styles.thumb, left: `${pct}%` }} />
+        </div>
       </div>
+
       <span style={styles.index}>
         {totalBars > 0 ? `${currentIndex + 1} / ${totalBars}` : '—'}
       </span>
@@ -98,8 +125,27 @@ const styles = {
     textTransform: 'uppercase',
     flexShrink: 0,
   },
-  track: {
+  playBtn: {
+    background: '#21262d',
+    border: '1px solid #30363d',
+    borderRadius: '50%',
+    color: '#58a6ff',
+    width: 28,
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 12,
+    flexShrink: 0,
+    cursor: 'pointer',
+    padding: 0,
+  },
+  trackWrapper: {
     flex: 1,
+    padding: '10px 0',  // large vertical hit area
+    cursor: 'pointer',
+  },
+  track: {
     height: 6,
     background: '#21262d',
     borderRadius: 3,
@@ -114,19 +160,17 @@ const styles = {
     height: '100%',
     background: '#58a6ff',
     borderRadius: 3,
-    transition: 'width 0.05s',
   },
   thumb: {
     position: 'absolute',
     top: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
     borderRadius: '50%',
     background: '#58a6ff',
     border: '2px solid #0d1117',
-    boxShadow: '0 0 0 1px #58a6ff',
-    transition: 'left 0.05s',
+    boxShadow: '0 0 0 2px #58a6ff',
     zIndex: 1,
   },
   index: {
