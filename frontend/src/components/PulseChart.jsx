@@ -1,5 +1,6 @@
 /**
  * PulseChart.jsx — Mobile responsive. Canvas heights and padding adapt to isMobile prop.
+ * DPR-aware rendering for crisp display on retina/high-DPI screens.
  */
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import ConvictionTooltip from './ConvictionTooltip.jsx'
@@ -38,12 +39,14 @@ function drawCandlesticks(ctx, bars, width, height, pad) {
 
   ctx.clearRect(0, 0, width, height)
 
+  // Wyckoff background bands
   bars.forEach((bar, i) => {
     const x = pad.left + i * barW
     ctx.fillStyle = wyckoffBgColor(bar.wyckoff_phase)
     ctx.fillRect(x, pad.top, barW, height - pad.top - pad.bottom)
   })
 
+  // Grid lines + price labels
   ctx.strokeStyle = '#21262d'
   ctx.lineWidth = 1
   const steps = 4
@@ -60,15 +63,16 @@ function drawCandlesticks(ctx, bars, width, height, pad) {
     ctx.fillText(price.toFixed(2), pad.left - 3, y + 3)
   }
 
+  // Candles
   bars.forEach((bar, i) => {
     const x = pad.left + i * barW + barW / 2
     const xLeft = x - candleW / 2
     const bullish = bar.close >= bar.open
     const color = bullish ? '#26a69a' : '#ef5350'
     const yHigh = priceToY(bar.high, minP, maxP, height, pad)
-    const yLow = priceToY(bar.low, minP, maxP, height, pad)
+    const yLow  = priceToY(bar.low,  minP, maxP, height, pad)
     const yOpen = priceToY(bar.open, minP, maxP, height, pad)
-    const yClose = priceToY(bar.close, minP, maxP, height, pad)
+    const yClose= priceToY(bar.close,minP, maxP, height, pad)
 
     ctx.strokeStyle = color
     ctx.lineWidth = 1
@@ -85,22 +89,23 @@ function drawCandlesticks(ctx, bars, width, height, pad) {
     ctx.fillRect(xLeft, bodyTop, candleW, bodyH)
   })
 
+  // Date axis — evenly spaced labels, always include last bar
+  const fontSize = pad.left > 50 ? 9 : 8
+  ctx.fillStyle = '#8b949e'
+  ctx.font = `${fontSize}px monospace`
+
   const step = Math.max(1, Math.floor(bars.length / 6))
-ctx.fillStyle = '#8b949e'
-ctx.font = `${pad.left > 50 ? 9 : 8}px monospace`
-ctx.textAlign = 'center'
-const labelIndices = new Set()
-for (let i = 0; i < bars.length; i += step) labelIndices.add(i)
-labelIndices.add(bars.length - 1)
-for (const i of labelIndices) {
-  const x = pad.left + i * barW + barW / 2
-  ctx.fillText(bars[i].date.slice(5), x, height - 3)
-}
-  // Always draw the last date
-const lastX = pad.left + (bars.length - 1) * barW + barW / 2
-ctx.textAlign = 'right'
-ctx.fillText(bars[bars.length - 1].date.slice(5), Math.min(lastX, width - pad.right - 2), height - 3)
-ctx.textAlign = 'center'
+  const labelIndices = new Set()
+  for (let i = 0; i < bars.length; i += step) labelIndices.add(i)
+  labelIndices.add(bars.length - 1)
+
+  labelIndices.forEach(i => {
+    const x = pad.left + i * barW + barW / 2
+    const isLast = i === bars.length - 1
+    ctx.textAlign = isLast ? 'right' : 'center'
+    const clampedX = isLast ? Math.min(x, width - pad.right - 1) : x
+    ctx.fillText(bars[i].date.slice(5), clampedX, height - 3)
+  })
 }
 
 function drawOscillator(ctx, bars, width, height, pad) {
@@ -163,6 +168,18 @@ function drawOscillator(ctx, bars, width, height, pad) {
   ctx.fillText('PULSE', pad.left + 4, 14)
 }
 
+// Helper: set up a canvas for the device pixel ratio and return ctx
+function setupCanvas(canvas, cssWidth, cssHeight) {
+  const dpr = window.devicePixelRatio || 1
+  canvas.width = cssWidth * dpr
+  canvas.height = cssHeight * dpr
+  canvas.style.width = cssWidth + 'px'
+  canvas.style.height = cssHeight + 'px'
+  const ctx = canvas.getContext('2d')
+  ctx.scale(dpr, dpr)
+  return ctx
+}
+
 export default function PulseChart({ bars, isMobile }) {
   const candleRef = useRef(null)
   const oscRef = useRef(null)
@@ -177,8 +194,8 @@ export default function PulseChart({ bars, isMobile }) {
   const [dims, setDims] = useState({ width: 900 })
 
   useEffect(() => {
-  if (bars.length > 0) setReplayIndex(bars.length - 1)
-}, [bars.length, bars])
+    if (bars.length > 0) setReplayIndex(bars.length - 1)
+  }, [bars.length])
 
   useEffect(() => {
     const el = containerRef.current
@@ -196,21 +213,19 @@ export default function PulseChart({ bars, isMobile }) {
     [bars, replayIndex]
   )
 
+  // Draw candlestick chart — DPR-aware
   useEffect(() => {
     const canvas = candleRef.current
     if (!canvas || !visibleBars.length) return
-    canvas.width = dims.width
-    canvas.height = CANDLESTICK_HEIGHT
-    const ctx = canvas.getContext('2d')
+    const ctx = setupCanvas(canvas, dims.width, CANDLESTICK_HEIGHT)
     drawCandlesticks(ctx, visibleBars, dims.width, CANDLESTICK_HEIGHT, PADDING)
   }, [visibleBars, dims.width, CANDLESTICK_HEIGHT, PADDING])
 
+  // Draw oscillator — DPR-aware
   useEffect(() => {
     const canvas = oscRef.current
     if (!canvas || !visibleBars.length) return
-    canvas.width = dims.width
-    canvas.height = OSCILLATOR_HEIGHT
-    const ctx = canvas.getContext('2d')
+    const ctx = setupCanvas(canvas, dims.width, OSCILLATOR_HEIGHT)
     drawOscillator(ctx, visibleBars, dims.width, OSCILLATOR_HEIGHT, PADDING)
   }, [visibleBars, dims.width, OSCILLATOR_HEIGHT, PADDING])
 
@@ -236,7 +251,6 @@ export default function PulseChart({ bars, isMobile }) {
     setTooltip(prev => ({ ...prev, visible: false }))
   }, [])
 
-  // Touch: tap on canvas shows tooltip
   const handleTouchStart = useCallback((e) => {
     const touch = e.touches[0]
     const bar = getBarAtX(touch.clientX)
@@ -244,7 +258,6 @@ export default function PulseChart({ bars, isMobile }) {
   }, [getBarAtX])
 
   const handleTouchEnd = useCallback(() => {
-    // Keep tooltip visible for a moment on mobile then dismiss
     setTimeout(() => setTooltip(prev => ({ ...prev, visible: false })), 2500)
   }, [])
 
