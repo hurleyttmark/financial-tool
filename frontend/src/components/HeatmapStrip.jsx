@@ -1,19 +1,15 @@
-/**
- * HeatmapStrip.jsx — 8-cell color heatmap strip summarizing pulse across visible range.
- * Divides the displayed bars into 8 equal buckets, averages pulse per bucket.
- */
 import { pulseToColor, fmt } from '../utils/colors.js'
 
-export default function HeatmapStrip({ bars, visibleStart, visibleEnd }) {
+export default function HeatmapStrip({ bars, visibleStart, visibleEnd, isMobile }) {
   if (!bars || bars.length === 0) return null
 
   const start = Math.max(0, visibleStart ?? 0)
   const end = Math.min(bars.length - 1, visibleEnd ?? bars.length - 1)
   const visible = bars.slice(start, end + 1)
-
   if (visible.length === 0) return null
 
-  const CELLS = 8
+  // Fewer cells on mobile so labels don't overflow
+  const CELLS = isMobile ? 5 : 8
   const bucketSize = Math.ceil(visible.length / CELLS)
   const buckets = []
 
@@ -40,7 +36,9 @@ export default function HeatmapStrip({ bars, visibleStart, visibleEnd }) {
               flex: b.count,
             }}
           >
-            <span style={styles.cellText}>{fmt(b.avg, 2)}</span>
+            {!isMobile && (
+              <span style={styles.cellText}>{fmt(b.avg, 2)}</span>
+            )}
           </div>
         ))}
       </div>
@@ -54,11 +52,7 @@ export default function HeatmapStrip({ bars, visibleStart, visibleEnd }) {
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 4,
-  },
+  container: { display: 'flex', flexDirection: 'column', gap: 4 },
   label: {
     fontSize: 10,
     color: '#8b949e',
@@ -67,7 +61,7 @@ const styles = {
   },
   strip: {
     display: 'flex',
-    height: 24,
+    height: 22,
     borderRadius: 4,
     overflow: 'hidden',
     border: '1px solid #30363d',
@@ -79,7 +73,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'default',
-    transition: 'opacity 0.15s',
     minWidth: 0,
   },
   cellText: {
