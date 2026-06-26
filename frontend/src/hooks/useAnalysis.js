@@ -16,7 +16,7 @@
  */
 import { useState, useRef, useCallback, useEffect } from 'react'
 
-const WS_BASE = 'ws://localhost:8001/ws/analyze'
+const WS_BASE = 'wss://financial-tool-wlz9.onrender.com/ws/analyze'
 
 export function useAnalysis() {
   const [state, setState] = useState({
